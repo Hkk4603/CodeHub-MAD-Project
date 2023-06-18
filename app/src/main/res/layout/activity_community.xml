@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/messageInput"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"
+        tools:listitem="@layout/item_chat_message" />
+
+    <EditText
+        android:id="@+id/messageInput"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:hint="Type a message..."
+        android:inputType="text"
+        android:maxLines="5"
+        android:background="@android:color/white"
+        android:padding="10dp"
+        android:autofillHints="" />
+
+    <ImageButton
+        android:id="@+id/sendButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignBottom="@id/messageInput"
+        android:layout_alignParentEnd="true"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="send chat button"
+        android:padding="10dp"
+        android:src="@drawable/ic_send" />
+
+</RelativeLayout>
