@@ -18,8 +18,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
 
 import java.util.HashMap;
 
@@ -30,8 +32,8 @@ public class Signup extends AppCompatActivity {
     FirebaseUser user;
     DatabaseReference ref;
 
-    public void createAccount(String email, String password){
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+    public void createAccount(String name,String email, String password){
+        mAuth.createUserWithEmailAndPassword(email.trim(), password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
@@ -39,12 +41,14 @@ public class Signup extends AppCompatActivity {
                     Log.d(TAG, "createUserWithEmail:success");
                     FirebaseUser user = mAuth.getCurrentUser();
 
+                    UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(name).build();
+
                     HashMap<String, String> signUpData = new HashMap<>();
                     signUpData.put("username", edtTxtUsername.getText().toString());
                     signUpData.put("email", edtTxtEmail.getText().toString());
 
 //                    String uId = user.getUid();
-//                    ref = FirebaseDatabase.getInstance().getReference("Users").child(uId);
+                    ref = FirebaseDatabase.getInstance().getReference("Users");
 //                    ref.push().setValue(signUpData, ((error, ref1) -> {
 //                        if(error == null){
 //                            Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
@@ -53,6 +57,13 @@ public class Signup extends AppCompatActivity {
 //                        }
 //                    }));
 
+                    if(FirebaseAuth.getInstance().getUid() != null) {
+                        userModel usermodel = new userModel(FirebaseAuth.getInstance().getUid(), name, email, password);
+                        user.updateProfile(userProfileChangeRequest);
+                        ref.child(FirebaseAuth.getInstance().getUid()).setValue(usermodel);
+                    }
+                    else
+                        Toast.makeText(getBaseContext(), "Signup failed !", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(Signup.this, Home.class);
                     startActivity(intent);
 
@@ -85,10 +96,11 @@ public class Signup extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email, password;
+                String email, password,name;
+                name = String.valueOf(edtTxtUsername.getText());
                 email = String.valueOf(edtTxtEmail.getText());
                 password = String.valueOf(edtTxtPassword.getText());
-                createAccount(email, password);
+                createAccount(name,email, password);
             }
         });
     }

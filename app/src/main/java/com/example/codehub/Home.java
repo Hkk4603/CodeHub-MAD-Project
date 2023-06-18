@@ -58,9 +58,12 @@ public class Home extends AppCompatActivity {
                     case R.id.nav_home:
                         Toast.makeText(Home.this, "Home clicked", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.nav_community:
+                    case R.id.nav_community: {
                         Toast.makeText(Home.this, "Community clicked", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Home.this, CommunityActivity.class));
+                        finish();
                         break;
+                    }
                     case R.id.nav_progress:
                         Toast.makeText(Home.this, "Progress clicked", Toast.LENGTH_SHORT).show();
                         break;
@@ -68,7 +71,7 @@ public class Home extends AppCompatActivity {
                         Toast.makeText(Home.this, "Account clicked", Toast.LENGTH_SHORT).show();
                         Intent intent_acc = new Intent(Home.this, Account.class);
                         startActivity(intent_acc);
-                        finish();
+//                        finish();
                         break;
                     case R.id.nav_logout:
                     {
