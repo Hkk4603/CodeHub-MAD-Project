@@ -12,6 +12,9 @@
         android:theme="@style/Theme.CodeHub"
         tools:targetApi="31">
         <activity
+            android:name=".JavaArticleActivity"
+            android:exported="false" />
+        <activity
             android:name=".CommunityActivity"
             android:exported="false" />
         <activity

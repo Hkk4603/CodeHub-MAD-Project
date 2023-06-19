@@ -99,8 +99,22 @@ public class Home extends AppCompatActivity {
         // Create a list of learning paths
         List<LearningPath> learningPaths = createLearningPaths();
 
-        adapter = new LearningPathAdapter(learningPaths);
+        adapter = new LearningPathAdapter(learningPaths,this);
         recyclerView.setAdapter(adapter);
+
+        // Set click listener for the learning path items
+        adapter.setOnItemClickListener(new LearningPathAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                // Get the selected learning path
+                LearningPath selectedLearningPath = learningPaths.get(position);
+
+                // Open the article activity passing the selected learning path information
+                Intent intent = new Intent(Home.this, JavaArticleActivity.class);
+                intent.putExtra("learningPath", selectedLearningPath);
+                startActivity(intent);
+            }
+        });
     }
 
     // Method to create a list of learning paths

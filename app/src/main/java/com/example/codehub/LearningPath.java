@@ -1,6 +1,8 @@
 package com.example.codehub;
 
-public class LearningPath {
+import java.io.Serializable;
+
+public class LearningPath implements Serializable {
 
     private String title;
     private int iconResource;
