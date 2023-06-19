@@ -5,6 +5,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,12 +16,17 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Home extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle drawerToggle;
     FirebaseAuth mAuth;
+    private RecyclerView recyclerView;
+    private LearningPathAdapter adapter;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -86,6 +93,27 @@ public class Home extends AppCompatActivity {
                 return false;
             }
         });
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        // Create a list of learning paths
+        List<LearningPath> learningPaths = createLearningPaths();
+
+        adapter = new LearningPathAdapter(learningPaths);
+        recyclerView.setAdapter(adapter);
+    }
+
+    // Method to create a list of learning paths
+    private List<LearningPath> createLearningPaths() {
+        List<LearningPath> learningPaths = new ArrayList<>();
+
+        // Add learning paths to the list
+        learningPaths.add(new LearningPath("Java", R.drawable.ic_data_object, "Description of Java learning path"));
+        learningPaths.add(new LearningPath("Python", R.drawable.ic_data_object, "Description of Python learning path"));
+        learningPaths.add(new LearningPath("C/C++", R.drawable.ic_data_object, "Description of C/C++ learning path"));
+//        learningPaths.add(new LearningPath("Web Development", R.drawable.ic_data_object, "Description of WebDev learning path"));
+        // Add more learning paths as needed
+
+        return learningPaths;
     }
 }
