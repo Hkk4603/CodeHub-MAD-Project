@@ -59,6 +59,7 @@ public class Signup extends AppCompatActivity {
 
                     if(FirebaseAuth.getInstance().getUid() != null) {
                         userModel usermodel = new userModel(FirebaseAuth.getInstance().getUid(), name, email, password);
+                        assert user != null;
                         user.updateProfile(userProfileChangeRequest);
                         ref.child(FirebaseAuth.getInstance().getUid()).setValue(usermodel);
                     }

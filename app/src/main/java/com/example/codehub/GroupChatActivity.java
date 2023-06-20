@@ -27,14 +27,9 @@ import java.util.List;
 
 public class GroupChatActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
     private EditText messageInput;
-    private ImageButton sendButton;
 
-    private FirebaseUser currentUser;
     private DatabaseReference databaseReference;
-
-    private String groupId;
 
     private GroupChatAdapter adapter;
     private List<ChatMessage> chatMessages;
@@ -45,14 +40,14 @@ public class GroupChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_group_chat);
 
         // Get the current user
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         // Get the group ID from the previous activity
-        groupId = getIntent().getStringExtra("groupId");
+        String groupId = getIntent().getStringExtra("groupId");
 
-        recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
         messageInput = findViewById(R.id.messageInput);
-        sendButton = findViewById(R.id.sendButton);
+        ImageButton sendButton = findViewById(R.id.sendButton);
 
         chatMessages = new ArrayList<>();
         adapter = new GroupChatAdapter(chatMessages);
@@ -105,7 +100,7 @@ public class GroupChatActivity extends AppCompatActivity {
             String userName = getCurrentUserName();
 
             // Create a new ChatMessage object
-            ChatMessage chatMessage = new ChatMessage(messageId, userId, FirebaseAuth.getInstance().getCurrentUser().getDisplayName().toString(), message, System.currentTimeMillis());
+            ChatMessage chatMessage = new ChatMessage(messageId, userId, FirebaseAuth.getInstance().getCurrentUser().getDisplayName(), message, System.currentTimeMillis());
 
             // Save the message to Firebase Database
             messageRef.child(messageId).setValue(chatMessage)

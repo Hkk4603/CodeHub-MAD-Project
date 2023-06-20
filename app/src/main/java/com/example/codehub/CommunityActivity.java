@@ -14,11 +14,14 @@ import android.widget.ImageButton;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +32,10 @@ public class CommunityActivity extends AppCompatActivity {
     private GroupChatAdapter chatAdapter;
     private List<ChatMessage> chatMessages;
     private DatabaseReference groupChatRef;
+    private DatabaseReference usersRef; // Add this reference for fetching user details
 
     private String groupId;
+    private FirebaseUser currentUser; // Add this variable to store the current user
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +45,12 @@ public class CommunityActivity extends AppCompatActivity {
         // Get the groupId from intent or any other source
         groupId = "groupId1"; // Replace with your logic to get the groupId
 
-        // Initialize Firebase Database reference
+        // Initialize Firebase Database references
         groupChatRef = FirebaseDatabase.getInstance().getReference().child("groups").child(groupId).child("messages");
+        usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
+
+        // Get the current user
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         // Initialize the chatMessages list and adapter
         chatMessages = new ArrayList<>();
@@ -108,27 +117,44 @@ public class CommunityActivity extends AppCompatActivity {
         String messageId = groupChatRef.push().getKey();
 
         if (messageId != null) {
-            // Get the current user ID and name (replace with your logic to get the user details)
-            String userId = "currentUserId"; // Replace with your logic to get the current user ID
-            String userName = "currentUser"; // Replace with your logic to get the current user name
+            // Get the current user ID
+            String userId = currentUser.getUid();
 
-            // Create a new ChatMessage object
-            ChatMessage chatMessage = new ChatMessage(messageId, userId, userName, message, System.currentTimeMillis());
+            // Create a final variable to store the user name
+            final String[] userName = { "Unknown User" }; // Default value if user name is not available
 
-            // Save the message to Firebase Database
-            groupChatRef.child(messageId).setValue(chatMessage)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            // Message sent successfully
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            // Handle message sending failure if needed
-                        }
-                    });
+            // Fetch the user details from the database
+            usersRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        userName[0] = snapshot.child("userName").getValue(String.class);
+
+                        // Create a new ChatMessage object
+                        ChatMessage chatMessage = new ChatMessage(messageId, userId, userName[0], message, System.currentTimeMillis());
+
+                        // Save the message to Firebase Database
+                        groupChatRef.child(messageId).setValue(chatMessage)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        // Message sent successfully
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        // Handle message sending failure if needed
+                                    }
+                                });
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    // Handle database error if needed
+                }
+            });
         }
     }
 }
