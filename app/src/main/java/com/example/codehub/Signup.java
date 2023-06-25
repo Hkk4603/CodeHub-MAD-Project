@@ -19,8 +19,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 
 import java.util.HashMap;
@@ -30,7 +28,11 @@ public class Signup extends AppCompatActivity {
     Button signup;
     private FirebaseAuth mAuth;
     FirebaseUser user;
-    DatabaseReference ref;
+//    DatabaseReference ref;
+
+    Bundle bundle;
+
+
 
     public void createAccount(String name,String email, String password){
         mAuth.createUserWithEmailAndPassword(email.trim(), password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -41,34 +43,27 @@ public class Signup extends AppCompatActivity {
                     Log.d(TAG, "createUserWithEmail:success");
                     FirebaseUser user = mAuth.getCurrentUser();
 
-                    UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(name).build();
+//                    UserProfileChangeRequest  userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(name).build();
 
-                    HashMap<String, String> signUpData = new HashMap<>();
-                    signUpData.put("username", edtTxtUsername.getText().toString());
-                    signUpData.put("email", edtTxtEmail.getText().toString());
+//                    HashMap<String, String> signUpData = new HashMap<>();
+//                    signUpData.put("username", edtTxtUsername.getText().toString());
+//                    signUpData.put("email", edtTxtEmail.getText().toString());
+//                    ref = FirebaseDatabase.getInstance().getReference("Users");
 
-//                    String uId = user.getUid();
-                    ref = FirebaseDatabase.getInstance().getReference("Users");
-//                    ref.push().setValue(signUpData, ((error, ref1) -> {
-//                        if(error == null){
-//                            Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
-//                        }else{
-//                            Toast.makeText(getBaseContext(), "UnSuccess", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }));
 
-                    if(FirebaseAuth.getInstance().getUid() != null) {
-                        userModel usermodel = new userModel(FirebaseAuth.getInstance().getUid(), name, email, password);
-                        assert user != null;
-                        user.updateProfile(userProfileChangeRequest);
-                        ref.child(FirebaseAuth.getInstance().getUid()).setValue(usermodel);
-                    }
-                    else
-                        Toast.makeText(getBaseContext(), "Signup failed !", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(Signup.this, Home.class);
-                    startActivity(intent);
-
-                    finish();
+//                        userModel usermodel = new userModel(FirebaseAuth.getInstance().getUid(), name, email, password);
+//                        assert user != null;
+//                        user.updateProfile(userProfileChangeRequest);
+//                        ref.child(FirebaseAuth.getInstance().getUid()).setValue(usermodel);
+                        String username, email;
+                        username = edtTxtUsername.getText().toString();
+                        email = edtTxtEmail.getText().toString();
+                        Intent intent = new Intent(Signup.this, AddInfo.class);
+                        bundle.putString("username", username);
+                        bundle.putString("email", email);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                        finish();
                 }else{
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -87,6 +82,8 @@ public class Signup extends AppCompatActivity {
         getSupportActionBar().hide();
         // initializing firebase authentication
         mAuth = FirebaseAuth.getInstance();
+
+        bundle = new Bundle();
 
         edtTxtUsername = findViewById(R.id.username);
         edtTxtEmail = findViewById(R.id.email);

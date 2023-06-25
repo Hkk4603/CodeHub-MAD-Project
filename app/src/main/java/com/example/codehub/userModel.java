@@ -1,24 +1,17 @@
 package com.example.codehub;
 
 public class userModel {
-    private String userId, userName, userEmail, userPassword;
+    private String userName, userEmail, uPhno, profilePic;
 
     public userModel(){
     }
 
-    public userModel(String userId, String userName, String userEmail, String userPassword) {
-        this.userId = userId;
+    public userModel(String userName, String userEmail, String uPhno, String profilePic) {
         this.userName = userName;
         this.userEmail = userEmail;
-        this.userPassword = userPassword;
-    }
+        this.uPhno = uPhno;
+        this.profilePic = profilePic;
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public String getUserName() {
@@ -37,11 +30,17 @@ public class userModel {
         this.userEmail = userEmail;
     }
 
-    public String getUserPassword() {
-        return userPassword;
+    public String getProfilePic() { return profilePic; }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
     }
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    public String getuPhno() {
+        return uPhno;
+    }
+
+    public void setuPhno(String uPhno) {
+        this.uPhno = uPhno;
     }
 }
