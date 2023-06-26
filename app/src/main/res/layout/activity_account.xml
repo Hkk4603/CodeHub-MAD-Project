@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -51,7 +51,6 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_mono_medium"
                     android:text="Username: "
-                    android:textColor="#00BFA6"
                     android:textSize="20sp" />
 
                 <TextView
@@ -61,7 +60,6 @@
                     android:layout_marginLeft="10dp"
                     android:fontFamily="@font/roboto_mono_medium"
                     android:text="uname"
-                    android:textColor="#00BFA6"
                     android:textSize="20sp" />
 
             </LinearLayout>
@@ -79,7 +77,6 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_mono_medium"
                     android:text="Email: "
-                    android:textColor="#00BFA6"
                     android:textSize="20sp" />
 
                 <TextView
@@ -89,7 +86,6 @@
                     android:layout_marginLeft="10dp"
                     android:fontFamily="@font/roboto_mono_medium"
                     android:text="uemail"
-                    android:textColor="#00BFA6"
                     android:textSize="20sp" />
 
             </LinearLayout>
@@ -106,7 +102,6 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_mono_medium"
                     android:text="Phone number: "
-                    android:textColor="#00BFA6"
                     android:textSize="20sp" />
 
                 <TextView
@@ -116,7 +111,6 @@
                     android:layout_marginLeft="10dp"
                     android:fontFamily="@font/roboto_mono_medium"
                     android:text="uphno"
-                    android:textColor="#00BFA6"
                     android:textSize="20sp" />
 
             </LinearLayout>
