@@ -15,7 +15,7 @@
             android:name=".AddInfo"
             android:exported="false" />
         <activity
-            android:name=".JavaArticleActivity"
+            android:name=".ArticleActivity"
             android:exported="false" />
         <activity
             android:name=".CommunityActivity"

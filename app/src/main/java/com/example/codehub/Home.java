@@ -68,7 +68,7 @@ public class Home extends AppCompatActivity {
                     case R.id.nav_community: {
                         Toast.makeText(Home.this, "Community clicked", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Home.this, CommunityActivity.class));
-                        finish();
+//                        finish();
                         break;
                     }
                     case R.id.nav_progress:
@@ -110,7 +110,7 @@ public class Home extends AppCompatActivity {
                 LearningPath selectedLearningPath = learningPaths.get(position);
 
                 // Open the article activity passing the selected learning path information
-                Intent intent = new Intent(Home.this, JavaArticleActivity.class);
+                Intent intent = new Intent(Home.this, ArticleActivity.class);
                 intent.putExtra("learningPath", selectedLearningPath);
                 startActivity(intent);
             }
@@ -122,10 +122,10 @@ public class Home extends AppCompatActivity {
         List<LearningPath> learningPaths = new ArrayList<>();
 
         // Add learning paths to the list
-        learningPaths.add(new LearningPath("Java", R.drawable.ic_data_object, "Description of Java learning path"));
-        learningPaths.add(new LearningPath("Python", R.drawable.ic_data_object, "Description of Python learning path"));
-        learningPaths.add(new LearningPath("C/C++", R.drawable.ic_data_object, "Description of C/C++ learning path"));
-//        learningPaths.add(new LearningPath("Web Development", R.drawable.ic_data_object, "Description of WebDev learning path"));
+        learningPaths.add(new LearningPath("Java", R.drawable.java, "Description of Java learning path"));
+        learningPaths.add(new LearningPath("Python", R.drawable.python, "Description of Python learning path"));
+        learningPaths.add(new LearningPath("C/C++", R.drawable.cpp, "Description of C/C++ learning path"));
+        learningPaths.add(new LearningPath("Web Development", R.drawable.javascript, "Description of WebDev learning path"));
         // Add more learning paths as needed
 
         return learningPaths;

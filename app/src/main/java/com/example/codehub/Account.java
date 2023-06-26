@@ -1,12 +1,5 @@
 package com.example.codehub;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -14,8 +7,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.bumptech.glide.Glide;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -23,8 +22,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 public class Account extends AppCompatActivity {
 
@@ -91,11 +88,12 @@ public class Account extends AppCompatActivity {
                         startActivity(intent_acc);
                         finish();
                         break;
-                    case R.id.nav_community:
+                    case R.id.nav_community:{
                         Toast.makeText(Account.this, "Community clicked", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Account.this, CommunityActivity.class));
-                        finish();
+//                        finish();
                         break;
+                    }
                     case R.id.nav_progress:
                         Toast.makeText(Account.this, "Progress clicked", Toast.LENGTH_SHORT).show();
                         break;

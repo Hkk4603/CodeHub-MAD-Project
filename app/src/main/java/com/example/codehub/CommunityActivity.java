@@ -2,18 +2,25 @@ package com.example.codehub;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -27,7 +34,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommunityActivity extends AppCompatActivity {
-
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    ActionBarDrawerToggle drawerToggle;
     private RecyclerView recyclerView;
     private GroupChatAdapter chatAdapter;
     private List<ChatMessage> chatMessages;
@@ -38,9 +47,72 @@ public class CommunityActivity extends AppCompatActivity {
     private FirebaseUser currentUser; // Add this variable to store the current user
 
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(drawerToggle.onOptionsItemSelected(item)){
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed(){
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else{
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_community);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.start, R.string.close);
+        drawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_home: {
+                        Toast.makeText(CommunityActivity.this, "Home clicked", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(CommunityActivity.this, Home.class);
+                        startActivity(intent);
+//                        finish();
+                        break;
+                    }
+                    case R.id.nav_community: {
+                        Toast.makeText(CommunityActivity.this, "Community clicked", Toast.LENGTH_SHORT).show();
+//                        startActivity(new Intent(CommunityActivity.this, CommunityActivity.class));
+//                        finish();
+                        break;
+                    }
+                    case R.id.nav_progress:
+                        Toast.makeText(CommunityActivity.this, "Progress clicked", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.nav_account:
+                        Toast.makeText(CommunityActivity.this, "Account clicked", Toast.LENGTH_SHORT).show();
+                        Intent intent_acc = new Intent(CommunityActivity.this, Account.class);
+                        startActivity(intent_acc);
+//                        finish();
+                        break;
+                    case R.id.nav_logout:
+                    {
+                        Toast.makeText(CommunityActivity.this, "Logout clicked", Toast.LENGTH_SHORT).show();
+                        FirebaseAuth.getInstance().signOut();
+                        Intent intent_logout = new Intent(CommunityActivity.this, MainActivity.class);
+                        startActivity(intent_logout);
+                        finish();
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
 
         // Get the groupId from intent or any other source
         groupId = "groupId1"; // Replace with your logic to get the groupId
