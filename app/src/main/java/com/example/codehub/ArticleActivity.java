@@ -67,8 +67,9 @@ public class ArticleActivity extends AppCompatActivity {
 //                        finish();
                         break;
                     }
-                    case R.id.nav_progress:
-                        Toast.makeText(ArticleActivity.this, "Progress clicked", Toast.LENGTH_SHORT).show();
+                    case R.id.nav_editor:
+                        Toast.makeText(ArticleActivity.this, "CodeEditor clicked", Toast.LENGTH_SHORT).show();
+                        startActivity((new Intent(ArticleActivity.this, TextEditor.class)));
                         break;
                     case R.id.nav_account:
                         Toast.makeText(ArticleActivity.this, "Account clicked", Toast.LENGTH_SHORT).show();

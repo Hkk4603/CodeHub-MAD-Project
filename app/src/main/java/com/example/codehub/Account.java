@@ -94,8 +94,9 @@ public class Account extends AppCompatActivity {
 //                        finish();
                         break;
                     }
-                    case R.id.nav_progress:
-                        Toast.makeText(Account.this, "Progress clicked", Toast.LENGTH_SHORT).show();
+                    case R.id.nav_editor:
+                        Toast.makeText(Account.this, "CodeEditor clicked", Toast.LENGTH_SHORT).show();
+                        startActivity((new Intent(Account.this, TextEditor.class)));
                         break;
                     case R.id.nav_account:
                         Toast.makeText(Account.this, "Account clicked", Toast.LENGTH_SHORT).show();
@@ -123,6 +124,7 @@ public class Account extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 userModel retrieveUser = snapshot.getValue(userModel.class);
+                assert retrieveUser != null;
                 uname.setText(retrieveUser.getUserName());
                 email.setText(retrieveUser.getUserEmail());
                 phno.setText(retrieveUser.getuPhno());

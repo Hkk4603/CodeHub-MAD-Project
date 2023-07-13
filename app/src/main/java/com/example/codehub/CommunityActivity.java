@@ -91,8 +91,9 @@ public class CommunityActivity extends AppCompatActivity {
 //                        finish();
                         break;
                     }
-                    case R.id.nav_progress:
-                        Toast.makeText(CommunityActivity.this, "Progress clicked", Toast.LENGTH_SHORT).show();
+                    case R.id.nav_editor:
+                        Toast.makeText(CommunityActivity.this, "CodeEditor clicked", Toast.LENGTH_SHORT).show();
+                        startActivity((new Intent(CommunityActivity.this, TextEditor.class)));
                         break;
                     case R.id.nav_account:
                         Toast.makeText(CommunityActivity.this, "Account clicked", Toast.LENGTH_SHORT).show();

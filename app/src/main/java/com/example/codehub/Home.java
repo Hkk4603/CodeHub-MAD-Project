@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,11 +70,11 @@ public class Home extends AppCompatActivity {
                     case R.id.nav_community: {
                         Toast.makeText(Home.this, "Community clicked", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Home.this, CommunityActivity.class));
-//                        finish();
                         break;
                     }
-                    case R.id.nav_progress:
-                        Toast.makeText(Home.this, "Progress clicked", Toast.LENGTH_SHORT).show();
+                    case R.id.nav_editor:
+                        Toast.makeText(Home.this, "CodeEditor clicked", Toast.LENGTH_SHORT).show();
+                        startActivity((new Intent(Home.this, TextEditor.class)));
                         break;
                     case R.id.nav_account:
                         Toast.makeText(Home.this, "Account clicked", Toast.LENGTH_SHORT).show();
